@@ -86,7 +86,7 @@ class User:
             "dob" : self.dob,
             "age" : self.age,
             "classOf" : self.classOf, 
-            "location" : self._loc 
+            "loc" : self._loc 
         }
         return dict
     
@@ -107,10 +107,10 @@ class User:
     
     # output command to recreate the object, uses attribute directly
     def __repr__(self):
-        return f'User(name={self._name}, uid={self._uid}, password={self._password},dob={self._dob}, classOf={self._classOf}, location={self._loc})'
+        return f'User(name={self._name}, uid={self._uid}, password={self._password},dob={self._dob}, classOf={self._classOf}, loc={self._loc})'
 
 if __name__ == "__main__":
-    u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), location='San Diego' )# used help from team and example here
+    u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11), loc='San Diego' )# used help from team and example here
     print("Raw Variables of object:\n", vars(u1), "\n") 
     print("Raw Attributes and Methods of object:\n", dir(u1), "\n")
     print("Representation to Re-Create the object:\n", repr(u1), "\n") 

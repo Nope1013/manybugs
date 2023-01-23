@@ -9,6 +9,7 @@ age = calculate_age(dob)
 print(age)
 18
 
+from __init__ import db
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
@@ -114,3 +115,12 @@ if __name__ == "__main__":
     print("Raw Variables of object:\n", vars(u1), "\n") 
     print("Raw Attributes and Methods of object:\n", dir(u1), "\n")
     print("Representation to Re-Create the object:\n", repr(u1), "\n") 
+
+    def initPassengers():
+        db.create_all()
+        u1 = User(name='Thomas Edison', uid='toby', password='123toby', dob=date(1847, 2, 11))
+        u2 = User(name='Nicholas Tesla', uid='niko', password='123niko')
+        u3 = User(name='Alexander Graham Bell', uid='lex', password='123lex')
+        u4 = User(name='Eli Whitney', uid='whit', password='123whit')
+        u5 = User(name='John Mortensen', uid='jm1021', dob=date(1959, 10, 21))
+        u6 = User(name='Kirk Hammett', uid='kirk', password='123kirk', dob=date(1962, 11, 18))

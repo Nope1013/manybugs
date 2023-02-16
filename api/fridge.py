@@ -2,15 +2,15 @@ import json
 from flask import Blueprint, request, jsonify
 from flask_restful import Api, Resource # used for REST API building
 
-from model.fridges import Recipe
+from model.fridges import Fridge
 
-recipe_api = Blueprint('recipe_api', __name__,
-                   url_prefix='/api/recipes')
+rec_api = Blueprint('rec_api', __name__,
+                   url_prefix='/api/recs')
 
 # API docs https://flask-restful.readthedocs.io/en/latest/api.html
-api = Api(recipe_api)
+api = Api(rec_api)
 
-class RecipeAPI:        
+class FridgeAPI:        
     class _Create(Resource):
         def post(self):
             ''' Read data for json body '''
@@ -18,31 +18,31 @@ class RecipeAPI:
             
             ''' Avoid garbage in, error checking '''
             # validate recipename
-            recipename = body.get('recipename')
-            if recipename is None or len(recipename) < 2:
+            recname = body.get('recipename')
+            if recname is None or len(recname) < 2:
                 return {'message': f'recipename is missing, or is less than 2 characters'}, 400
             # validate recipelink
-            recipelink = body.get('recipelink')
-            if recipelink is None or len(recipelink) < 2:
+            reclink = body.get('recipelink')
+            if reclink is None or len(reclink) < 2:
                 return {'message': f'recipelink is missing, or is less than 2 characters'}, 400
 
             ''' #1: Key code block, setup USER OBJECT '''
-            ro = Recipe(recipename=recipename, 
-                      recipelink=recipelink)
+            ro = Fridge(recname=recname, 
+                      reclink=reclink)
             
             ''' #2: Key Code block to add user to database '''
             # create user in database
-            recipe = ro.create()
+            rec = ro.create()
             # success returns json of user
-            if recipe:
-                return jsonify(recipe.read())
+            if rec:
+                return jsonify(rec.read())
             # failure returns error
-            return {'message': f'Error or User ID {recipename} is duplicate'}, 400
+            return {'message': f'Error or User ID {recname} is duplicate'}, 400
 
     class _Read(Resource):
         def get(self):
-            recipes = Recipe.query.all()    # read/extract all users from database
-            json_ready = [recipe.read() for recipe in recipes]  # prepare output in json
+            recs = Rec.query.all()    # read/extract all users from database
+            json_ready = [rec.read() for rec in recs]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
     
 

@@ -15,38 +15,38 @@ from sqlalchemy.exc import IntegrityError
 # -- a.) db.Model is like an inner layer of the onion in ORM
 # -- b.) Recipe represents data we want to store, something that is built on db.Model
 # -- c.) SQLAlchemy ORM is layer on top of SQLAlchemy Core, then SQLAlchemy engine, SQL
-class Recipe(db.Model):
-    __tablename__ = 'recipes'  # table name is plural, class name is singular
+class Fridge(db.Model):
+    __tablename__ = 'recs'  # table name is plural, class name is singular
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, unique=True, primary_key=True)
-    _recipename = db.Column(db.String(255), unique=False, nullable=False)
-    _recipelink = db.Column(db.String(255), unique=False, nullable=False)
+    _recname = db.Column(db.String(255), unique=False, nullable=False)
+    _reclink = db.Column(db.String(255), unique=False, nullable=False)
 
     # Defines a relationship between Recipe record and Notes table, one-to-many (one recipe to many notes)
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, recipename, recipelink, recipetype):
-        self._recipename = recipename    # variables with self prefix become part of the object, 
-        self._recipelink = recipelink
+    def __init__(self, recname, reclink):
+        self._recname = recname    # variables with self prefix become part of the object, 
+        self._reclink = reclink
 
     # a name getter method, extracts name from object
     @property
-    def recipename(self):
-        return self._recipename
+    def recname(self):
+        return self._recname
     # a setter function, allows name to be updated after initial object creation
-    @recipename.setter
-    def recipename(self, recipename):
-        self._recipename = recipename
+    @recname.setter
+    def recname(self, recname):
+        self._recname = recname
         
     # a getter method, extracts link from object
     @property
-    def recipelink(self):
-        return self._recipelink
+    def reclink(self):
+        return self._reclink
     # a setter function, allows link to be updated after initial object creation
-    @recipelink.setter
-    def recipelink(self, recipelink):
-        self._recipelink = recipelink
+    @reclink.setter
+    def reclink(self, reclink):
+        self._reclink = reclink
         
     
     @property
@@ -72,18 +72,18 @@ class Recipe(db.Model):
     def read(self):
         return {
             "id": self.id,
-            "recipename" : self.recipename,
-            "recipelink" : self.recipelink,
+            "recipename" : self.recname,
+            "recipelink" : self.reclink,
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, recipename="", recipelink=""):
+    def update(self, recname="", reclink=""):
         """only updates values with length"""
-        if len(recipename) > 0:
-            self.recipename = recipename
-        if len(recipelink) > 0:
-            self.recipelink = recipelink
+        if len(recname) > 0:
+            self.recname = recname
+        if len(reclink) > 0:
+            self.reclink = reclink
         db.session.commit()
         return self
 
@@ -99,27 +99,27 @@ class Recipe(db.Model):
 
 
 # Builds working data for testing
-def initRecipes():
+def initRecs():
     with app.app_context():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        r1 = Recipe(recipename='Baked Feta Pasta', recipelink='https://www.foodnetwork.com/recipes/food-network-kitchen/baked-feta-pasta-9867689')
-        r2 = Recipe(recipename='Kale Salad', recipelink='https://www.loveandlemons.com/kale-salad/')
-        r3 = Recipe(recipename='Turkey Burgers', recipelink='https://www.kimscravings.com/easy-turkey-burgers/')
-        r4 = Recipe(recipename='Lentil Soup', recipelink='https://www.recipetineats.com/lentil-soup/')
-        r5 = Recipe(recipename='Caramelized Onion Mushroom Pizza', recipelink='https://showmetheyummy.com/caramelized-onion-mushroom-pizza-recipe/')
-        r6 = Recipe(recipename='Banana Bread', recipelink='https://www.simplyrecipes.com/recipes/banana_bread/')
-        r7 = Recipe(recipename='Chicken Fajitas', recipelink='https://healthyrecipesblogs.com/easy-chicken-fajitas/')
-        r8 = Recipe(recipename='Quick Tacos', recipelink='https://www.acouplecooks.com/quick-dinner-idea-5-minute-tacos/')
-        r9 = Recipe(recipename='Garlic Butter Shrimp', recipelink='https://www.acouplecooks.com/garlic-butter-shrimp/')
-        r10 = Recipe(recipename='Mediterranean Tuna Salad', recipelink='https://www.acouplecooks.com/mediterranean-tuna-salad/')
+        r1 = Fridge(recname='Baked Feta Pasta', reclink='https://www.foodnetwork.com/recipes/food-network-kitchen/baked-feta-pasta-9867689')
+        r2 = Fridge(recname='Kale Salad', reclink='https://www.loveandlemons.com/kale-salad/')
+        r3 = Fridge(recname='Turkey Burgers', reclink='https://www.kimscravings.com/easy-turkey-burgers/')
+        r4 = Fridge(recname='Lentil Soup', reclink='https://www.recipetineats.com/lentil-soup/')
+        r5 = Fridge(recname='Caramelized Onion Mushroom Pizza', reclink='https://showmetheyummy.com/caramelized-onion-mushroom-pizza-recipe/')
+        r6 = Fridge(recname='Banana Bread', reclink='https://www.simplyrecipes.com/recipes/banana_bread/')
+        r7 = Fridge(recname='Chicken Fajitas', reclink='https://healthyrecipesblogs.com/easy-chicken-fajitas/')
+        r8 = Fridge(recname='Quick Tacos', reclink='https://www.acouplecooks.com/quick-dinner-idea-5-minute-tacos/')
+        r9 = Fridge(recname='Garlic Butter Shrimp', reclink='https://www.acouplecooks.com/garlic-butter-shrimp/')
+        r10 = Fridge(recname='Mediterranean Tuna Salad', reclink='https://www.acouplecooks.com/mediterranean-tuna-salad/')
     
-        recipes = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10]
+        recs = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10]
 
-        for recipe in recipes:
+        for rec in recs:
             try:
-                recipe.create()
+                rec.create()
             except IntegrityError:
                 db.session.remove()
-                print(f"Records exist, duplicate email, or error: {recipe.model}")
+                print(f"Records exist, duplicate email, or error: {rec.model}")
